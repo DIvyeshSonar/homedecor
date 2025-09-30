@@ -15,7 +15,8 @@ const ProductGrid = () => {
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
-  const products = [
+  // Local fallback data (used only if API is unavailable)
+  const fallbackProducts = [
     {
       id: 1,
       name: 'Handwoven Wall Tapestry',
@@ -85,6 +86,45 @@ const ProductGrid = () => {
       isSale: false
     }
   ];
+
+  // API data state
+  const [products, setProducts] = useState(fallbackProducts);
+
+  // Resolve API base URL for CRA dev server and XAMPP
+  const apiBase = (() => {
+    if (window.location.port === '3000') {
+      return 'http://localhost/prjct/api';
+    }
+    // When served from XAMPP under /prjct
+    return `${window.location.origin}/prjct/api`;
+  })();
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`${apiBase}/products`, { credentials: 'include' })
+      .then(res => res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`)))
+      .then(rows => {
+        if (cancelled) return;
+        // Map API shape to UI shape
+        const mapped = rows.map(r => ({
+          id: r.id,
+          name: r.title,
+          price: parseFloat(r.price),
+          originalPrice: r.is_sale ? (parseFloat(r.price) * 1.25).toFixed(2) : undefined,
+          image: r.image_url,
+          category: r.category,
+          rating: parseFloat(r.rating ?? 0),
+          reviews: r.reviews ?? 0,
+          isNew: !!r.is_new,
+          isSale: !!r.is_sale
+        }));
+        setProducts(mapped);
+      })
+      .catch(() => {
+        // keep fallback
+      });
+    return () => { cancelled = true; };
+  }, [apiBase]);
 
   const filters = [
     { id: 'all', name: 'All Products', count: products.length },
@@ -217,7 +257,7 @@ const ProductGrid = () => {
                     whileHover={prefersReducedMotion ? undefined : { y: -10 }}
                     transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
                   >
-                    <Card className="border-0 shadow-sm h-100 overflow-hidden card-hover">
+                    <Card className="ds-card h-100 overflow-hidden card-hover">
                       <div className="position-relative overflow-hidden product-card">
                         <Card.Img
                           variant="top"
@@ -233,10 +273,10 @@ const ProductGrid = () => {
                         {/* Badges */}
                         <div className="position-absolute top-3 start-3 d-flex flex-column gap-2">
                           {product.isNew && (
-                            <Badge bg="sage-green" className="px-2 py-1">New</Badge>
+                            <Badge className="ds-badge ds-badge--green">New</Badge>
                           )}
                           {product.isSale && (
-                            <Badge bg="dusty-rose" className="px-2 py-1">Sale</Badge>
+                            <Badge className="ds-badge ds-badge--rose">Sale</Badge>
                           )}
                         </div>
 
@@ -292,7 +332,7 @@ const ProductGrid = () => {
                                 key={i}
                                 className={`me-1 ${
                                   i < Math.floor(product.rating) 
-                                    ? 'text-warning' 
+                                    ? 'ds-star' 
                                     : 'text-muted'
                                 }`}
                                 fill={i < Math.floor(product.rating) ? 'currentColor' : 'none'}
