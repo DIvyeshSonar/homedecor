@@ -171,7 +171,7 @@ const Hero = () => {
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 className="position-absolute top-0 end-0 translate-middle"
               >
-                <div className="bg-dusty-rose rounded-circle p-3 shadow">
+                <div className="ds-fab p-3">
                   <span className="fs-4">🏺</span>
                 </div>
               </motion.div>
@@ -181,7 +181,7 @@ const Hero = () => {
                 transition={{ duration: 3, repeat: Infinity, delay: 1 }}
                 className="position-absolute bottom-0 start-0 translate-middle"
               >
-                <div className="bg-sage-green rounded-circle p-3 shadow">
+                <div className="ds-fab p-3">
                   <span className="fs-4">🕯️</span>
                 </div>
               </motion.div>

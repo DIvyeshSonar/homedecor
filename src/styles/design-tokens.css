@@ -1,0 +1,138 @@
+:root {
+  /* Palette */
+  --color-bg: #FEFEFE;
+  --color-text: #2D2D2D;
+  --color-text-secondary: #6B6B6B;
+  --color-muted: #8B7D6B; /* warm-gray */
+  --color-cream: #F5F5DC;
+  --color-soft-pink: #F8E8E8;
+  --color-sage: #9CAF88;
+  --color-rose: #D4A5A5;
+  --color-warning: #F6C343;
+
+  /* Borders */
+  --border-default: rgba(0,0,0,0.06);
+  --border-input: rgba(0,0,0,0.10);
+  --border-panel-soft: rgba(255,255,255,0.60);
+  --focus-ring: rgba(156,175,136,0.75);
+
+  /* Gradients */
+  --grad-hero: linear-gradient(135deg, rgba(245,245,220,0.90) 0%, rgba(248,232,232,0.90) 100%);
+  --grad-button: linear-gradient(135deg, #8B7D6B 0%, #9CAF88 100%);
+  --grad-button-hover: linear-gradient(135deg, #9CAF88 0%, #8B7D6B 100%);
+
+  /* Shadows */
+  --shadow-card: 0 10px 24px rgba(0,0,0,0.08);
+  --shadow-card-hover: 0 20px 40px rgba(0,0,0,0.10);
+  --shadow-button-hover: 0 10px 20px rgba(139,125,107,0.30);
+  --shadow-panel: 0 18px 40px rgba(0,0,0,0.14);
+  --shadow-fab: 0 8px 20px rgba(0,0,0,0.12);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 9999px;
+}
+
+/* Layout */
+.ds-body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Hero */
+.ds-hero-bg { background: var(--grad-hero); }
+
+/* Buttons */
+.ds-btn-primary {
+  background: var(--grad-button);
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.ds-btn-primary:hover {
+  background: var(--grad-button-hover);
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-2px);
+}
+.ds-btn-primary:active { transform: translateY(1px); }
+.ds-btn-primary:focus { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.ds-btn-primary[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+.ds-btn-secondary {
+  background: #FEFEFE;
+  color: var(--color-text);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+  padding: 10px 24px;
+}
+.ds-btn-secondary:hover { background: #F5F5F5; }
+
+/* Chips / Filters */
+.ds-chip {
+  background: #FFFFFF;
+  color: var(--color-text);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+}
+.ds-chip--active { background: var(--color-sage); color: #fff; border-color: transparent; }
+
+/* Cards */
+.ds-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ds-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-8px); }
+
+/* Product rating */
+.ds-star { color: var(--color-warning); }
+
+/* Glass panel CTA */
+.ds-glass {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-panel-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+}
+
+/* Floating action icon */
+.ds-fab {
+  background: var(--color-soft-pink);
+  color: #fff;
+  border-radius: 50%;
+  box-shadow: var(--shadow-fab);
+}
+
+/* Forms */
+.ds-input {
+  background: #FFFFFF;
+  color: var(--color-text);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-md);
+}
+.ds-input:focus { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-color: transparent; }
+
+/* Badges */
+.ds-badge { padding: 2px 10px; border-radius: var(--radius-pill); font-weight: 600; }
+.ds-badge--green { background: var(--color-sage); color: #fff; }
+.ds-badge--rose { background: var(--color-rose); color: #fff; }
+
+/* Footer */
+.ds-footer { background: var(--color-soft-pink); color: var(--color-text); }
+
+/* DO NOT rules (as comments for maintainers)
+- Do NOT apply hero/button gradients to icons or text elements.
+- Do NOT use warm-gray (#8B7D6B) as a surface background.
+- Do NOT change card media radius independently from card container.
+- Do NOT use brand greens for rating stars; use var(--color-warning).
+*/

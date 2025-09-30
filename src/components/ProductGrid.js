@@ -99,6 +99,17 @@ const ProductGrid = () => {
     return `${window.location.origin}/prjct/api`;
   })();
 
+  const postJson = async (url, body) => {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json().catch(() => ({}));
+  };
+
   useEffect(() => {
     let cancelled = false;
     fetch(`${apiBase}/products`, { credentials: 'include' })
@@ -316,35 +327,20 @@ const ProductGrid = () => {
                               whileTap={{ scale: 0.9 }}
                               className="btn btn-primary-custom btn-sm rounded-circle"
                               aria-label={`Add ${product.name} to cart`}
-                              onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image })}
+                              onClick={async () => {
+                                try {
+                                  await postJson(`${apiBase}/cart/add`, { product_id: product.id, qty: 1 });
+                                } catch {}
+                                addItem({ id: product.id, name: product.name, price: product.price, image: product.image });
+                              }}
                             >
                               <FiShoppingCart />
                             </motion.button>
-                          </div>
+                        </div>
                         </div>
                       </div>
 
                       <Card.Body className="p-4">
-                        <div className="d-flex align-items-center mb-2">
-                          <div className="d-flex align-items-center me-auto">
-                            {[...Array(5)].map((_, i) => (
-                              <FiStar
-                                key={i}
-                                className={`me-1 ${
-                                  i < Math.floor(product.rating) 
-                                    ? 'ds-star' 
-                                    : 'text-muted'
-                                }`}
-                                fill={i < Math.floor(product.rating) ? 'currentColor' : 'none'}
-                                size={14}
-                              />
-                            ))}
-                            <small className="text-muted ms-1">
-                              {product.rating} ({product.reviews})
-                            </small>
-                          </div>
-                        </div>
-
                         <Card.Title className="h5 font-serif font-bold text-warm-gray mb-2">
                           {product.name}
                         </Card.Title>
@@ -365,7 +361,12 @@ const ProductGrid = () => {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="btn btn-primary-custom btn-sm"
-                            onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image })}
+                            onClick={async () => {
+                              try {
+                                await postJson(`${apiBase}/cart/add`, { product_id: product.id, qty: 1 });
+                              } catch {}
+                              addItem({ id: product.id, name: product.name, price: product.price, image: product.image });
+                            }}
                           >
                             Add to Cart
                           </motion.button>

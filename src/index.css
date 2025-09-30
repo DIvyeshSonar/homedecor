@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./styles/design-tokens.css";
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Custom styles */
@@ -11,12 +12,12 @@ html {
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #FEFEFE;
-  color: #2D2D2D;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 .hero-gradient {
-  background: linear-gradient(135deg, rgba(245, 245, 220, 0.9) 0%, rgba(248, 232, 232, 0.9) 100%);
+  background: var(--grad-hero);
 }
 
 .card-hover {
@@ -25,23 +26,23 @@ body {
 
 .card-hover:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .btn-primary-custom {
-  background: linear-gradient(135deg, #8B7D6B 0%, #9CAF88 100%);
+  background: var(--grad-button);
   border: none;
   color: white;
   padding: 12px 32px;
-  border-radius: 50px;
+  border-radius: var(--radius-pill);
   font-weight: 500;
   transition: all 0.3s ease;
 }
 
 .btn-primary-custom:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(139, 125, 107, 0.3);
-  background: linear-gradient(135deg, #9CAF88 0%, #8B7D6B 100%);
+  box-shadow: var(--shadow-button-hover);
+  background: var(--grad-button-hover);
 }
 
 .section-padding {
